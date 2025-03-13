@@ -1,0 +1,39 @@
+
+//1
+
+select orderid,orderdate
+from orders
+where datediff(MONTH,orderdate,getdate())=0
+
+
+//2
+select top 1 o.CustomerID,sum(oi.Quantity) as Miqdori
+from orderitems oi
+inner join Orders o on o.OrderID = oi.OrderID
+group by o.CustomerID
+order by Miqdori desc
+
+
+
+//3
+select *
+from orderitems oi
+full outer join Products p on p.ProductID = oi.ProductID
+where oi.ProductID is null
+
+
+//4
+select p.Name,sum(oi.price) as BarchaDaromadi
+from orderitems oi
+left join Products p on p.ProductID = oi.ProductID
+group by p.Name
+
+//5
+SELECT 
+    YEAR(o.OrderDate) AS Year,
+    MONTH(o.OrderDate) AS Month,
+    COUNT(o.OrderID) AS OrderCount
+FROM Orders o
+WHERE YEAR(o.OrderDate) = 2024
+GROUP BY YEAR(o.OrderDate), MONTH(o.OrderDate)
+ORDER BY Month;
